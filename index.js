@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", function (event) {
+import { isImage } from './modules/isImage.js';
+
+document.addEventListener("DOMContentLoaded", async function (event) {
 
 	var nav = document.getElementsByTagName('nav')[0],
 		main = document.getElementsByTagName('main')[0],
@@ -52,8 +54,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		navLinks[i].addEventListener('click', closeMenu, false);
 	}
 
-	// function fixMobileSafariViewport() {
-	//   $element.css('height', window.innerHeight * 0.9);
-	// }
-
+	let dogImageUrl = await fetchDogImageUrl();
+	let dogImageContainer = document.getElementsByClassName('dog-image-container')[0];
+	dogImageContainer.innerHTML = `
+		<img alt="random dog" src=${dogImageUrl} style="max-height:200px;"/>
+	`
 })
+
+async function fetchDogImageUrl() {
+	let dogImageUrl = '';
+
+	while(dogImageUrl === '') {
+		console.log('dogImageUrl: ', dogImageUrl);
+		let dogImageResponse = await fetch('https://random.dog/woof.json');
+		let dogImage = await dogImageResponse.json();
+		console.log('dogImage: ', dogImage);
+		if (isImage(dogImage.url)) {
+			dogImageUrl = dogImage.url;
+		}
+		console.log('dogImageUrl: ', dogImageUrl);
+	}
+
+    return dogImageUrl;
+  }

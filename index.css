@@ -150,6 +150,7 @@ header {
   background-color: white;
   border: 5px solid grey;
   overflow: hidden;
+  text-align: center;
 }
 
 h2 {
