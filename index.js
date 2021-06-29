@@ -1,5 +1,3 @@
-import { isImage } from './modules/isImage.js';
-
 document.addEventListener("DOMContentLoaded", async function (event) {
 
 	var nav = document.getElementsByTagName('nav')[0],
